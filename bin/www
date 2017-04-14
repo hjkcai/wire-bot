@@ -12,7 +12,7 @@ const port = normalizePort(process.env.PORT || config.port || '3000')
 // 创建https服务器
 const server = https.createServer({
   key: fs.readFileSync(path.join(__dirname, '../ssl/server.key')),
-  cert: fs.readFileSync(path.join(__dirname, '../ssl/server.cert'))
+  cert: fs.readFileSync(path.join(__dirname, '../ssl/server.crt'))
 }, app.callback())
 
 server.listen(port)
