@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const fs = require('fs')
 const app = require('../src/app')
 const path = require('path')
 const https = require('https')
@@ -10,8 +11,8 @@ const port = normalizePort(process.env.PORT || config.port || '3000')
 
 // 创建https服务器
 const server = https.createServer({
-  key: path.join(__dirname, '../ssl/server.key'),
-  cert: path.join(__dirname, '../ssl/server.cert')
+  key: fs.readFileSync(path.join(__dirname, '../ssl/server.key')),
+  cert: fs.readFileSync(path.join(__dirname, '../ssl/server.cert'))
 }, app.callback())
 
 server.listen(port)
