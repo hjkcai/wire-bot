@@ -2,7 +2,6 @@
 
 const Koa = require('koa')
 const path = require('path')
-const config = require('./config')
 const koaStatic = require('koa-static')
 const bodyParser = require('koa-bodyparser')
 const { loggerMiddleware } = require('./lib/logger')
