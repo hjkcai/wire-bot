@@ -1,14 +1,19 @@
 #!/usr/bin/env node
 
 const app = require('../src/app')
-const http = require('http')
+const path = require('path')
+const https = require('https')
 const config = require('../src/config')
 
 // 从环境变量中读取端口
 const port = normalizePort(process.env.PORT || config.port || '3000')
 
-// 创建http服务器
-const server = http.createServer(app.callback())
+// 创建https服务器
+const server = https.createServer({
+  key: path.join(__dirname, '../ssl/server.key'),
+  cert: path.join(__dirname, '../ssl/server.cert')
+}, app.callback())
+
 server.listen(port)
 server.on('error', onError)
 server.on('listening', onListening)
