@@ -3,6 +3,7 @@
 const fs = require('fs')
 const path = require('path')
 const util = require('util')
+const chalk = require('chalk')
 const config = require('../config')
 const log4js = require('log4js')
 
@@ -31,9 +32,10 @@ const loggerMiddleware = async (ctx, next) => {
   const remoteAddress = ctx.headers['x-forwarded-for'] || ctx.ip || ctx.ips ||
     (ctx.socket && (ctx.socket.remoteAddress || (ctx.socket.socket && ctx.socket.socket.remoteAddress)))
 
-  logger.info(`${ctx.method} ${ctx.status} ${ctx.url} - ${remoteAddress} - ${ms}ms`)
+  logger.info(chalk.white.bgRed(`${ctx.method} ${ctx.status} ${ctx.url} - ${remoteAddress} - ${ms}ms`))
   logger.info('headers: \n' + util.inspect(ctx.headers, false, null, true))
   if (ctx.request.body) {
+    if (typeof ctx.request.body === 'object' && Object.keys(ctx.request.body).length === 0) return
     logger.info('body: \n' + util.inspect(ctx.request.body, false, null, true))
   }
 }
